@@ -1,20 +1,19 @@
 # Implement solution to the Merge K-sorted Lists Problem
-import heapq
+from heapq import heapify, heappush, heappop
 def merge(lists):
     """
     input: k sorted lists List[List[int]], each containing at least one element
     output: a merged sorted list List[int]
     """
-    heap = []
     k = len(lists)
-    l = [0] * k
+    l = [0] * k     # list indexes
     res = []
     s = set(range(k))
-    for i, ind in enumerate(l):
-        heapq.heappush(heap, (lists[i][ind], i))
+    heap = [(lists[i][0],i) for i in range(k)]
+    heapify(heap)
     while s:
         # while there is any element left in any list
-        cur_min = heapq.heappop(heap)
+        cur_min = heappop(heap)
         num, list_ind = cur_min
         res.append(num)
         if l[list_ind] == len(lists[list_ind]) - 1:
@@ -22,11 +21,11 @@ def merge(lists):
         else:
             l[list_ind] += 1
             temp = lists[list_ind][l[list_ind]]
-            heapq.heappush(heap, (temp, list_ind))
+            heappush(heap, (temp, list_ind))
     return res
 
 # Tests
 l1 = list(range(40,50))
 l2 = list(range(5))
-l3 = list(range(7))
+l3 = list(range(5,7))
 print (merge([l1,l2,l3]))
