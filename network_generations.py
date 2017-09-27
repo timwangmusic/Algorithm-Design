@@ -1,33 +1,51 @@
 from nodes import node
-from random import choice
+import random
 class generateNetwork:
-    def __init__(self, nodes):
-        self.nodes = nodes
+    def __init__(self):
+        self.lastKey = -1
 
-    def constructNetwork(self):
+    def generateRandomNodes(self, numNodes = 8, dim = 2, val_start = 0, val_end = 100):
+        """
+        Return a list of nodes with random values, using random.uniform function.
+        """
+        random.seed()
+        cur_key = self.lastKey + 1
+        nodes = []
+        for i in range(numNodes):
+            new_data = [random.uniform(val_start, val_end) for _ in range(dim)]
+            nodes.append(node(key = cur_key, data = new_data))
+            cur_key += 1
+        self.lastKey += numNodes
+        return nodes
+
+    def constructNetwork(self, nodes):
         pass
 
 class generateTree(generateNetwork):
     """
-    Subclass of generate network.
-    Construct a random tree, given a list of disjoint nodes.
+    Derived from generate network class.
+    Construct network function constructs a tree with random connection, given a list of nodes.
+    The collection of trees created is saved in the forest variable.
     """
-    def __init__(self, nodes):
-        generateNetwork.__init__(self, nodes)
-        self.node_set = set(self.nodes)
-        self.root = None
-        self.tree = []
+    def __init__(self):
+        generateNetwork.__init__(self)
+        self.forest = []
 
-    def constructNetwork(self):
+    def constructNetwork(self, nodes):
+        random.seed()
+        random.shuffle(nodes)       # randomization
+        root = None
+        tree = []
         parent = None
-        while self.node_set:
-            n = self.node_set.pop()
-            if self.tree:
-                parent = choice(self.tree)
+        while nodes:
+            n = nodes.pop()
+            if tree:
+                parent = random.choice(tree)
                 parent.addEdges([n])
             else:
-                self.root = n
-            self.tree.append(n)
+                root = n
+            tree.append(n)
+        self.forest.append(root)
 
     def _print(self, node):
         if node == None: return
@@ -37,17 +55,13 @@ class generateTree(generateNetwork):
 
 class Test:
     def __init__(self):
-        s = node(key = 0, data = (0,0))
-        a = node(key = 1, data = (-3, 0))
-        b = node(key = 2, data = (-5,0))
-        c = node(key = 3, data = (5,-10))
-        d = node(key = 4, data = (20,100))
-        self.node_list = [s, a, b, c, d]
+        pass
 
-    def generate(self):
-        gt = generateTree(self.node_list)
-        gt.constructNetwork()
-        gt._print(gt.root)
+    def generatePrint(self, numTrees = 3):
+        gt = generateTree()
+        for i in range(numTrees):
+            gt.constructNetwork(gt.generateRandomNodes())
+            gt._print(gt.forest[-1])
 
 Tester = Test()
-Tester.generate()
+Tester.generatePrint()
