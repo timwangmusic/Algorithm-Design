@@ -1,4 +1,4 @@
-from nodes import MSTNode
+from Graphs.nodes import MSTNode
 from collections import defaultdict
 
 class Kruskals:
@@ -85,5 +85,6 @@ class Test:
         self.kruskals.printMST()
         print ("The total cost of building minimum spanning tree is %.2f" % self.kruskals.MSTCost())
 
-test = Test()
-test.runAlgorithm()
+if __name__ == '__main__':
+    test = Test()
+    test.runAlgorithm()

@@ -1,4 +1,4 @@
-from nodes import MSTNode
+from Graphs.nodes import MSTNode
 from heapq import heappush, heappop
 
 class Prims:
@@ -71,5 +71,6 @@ class Test():
         self.prims.printMST()
         print ("The total cost of building minimum spanning tree is %.2f" % self.prims.MSTCost())
 
-test = Test()
-test.runAlgorithm()
+if __name__ == '__main__':
+    test = Test()
+    test.runAlgorithm()
