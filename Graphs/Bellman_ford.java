@@ -1,11 +1,17 @@
+// This class implements Bellman-Ford Algorithm
+// For directed/undirected graphs without negative cycles
+import java.util.Arrays;
+
 public class Bellman_ford{
 	double[] distances;
 	int[] vertexes;
 	double[][] edges;			// weights for each pair of nodes, infinity means they are not connected
+	int networkSize;
 	
 	public Bellman_ford(int[] vertexes, double[][] edges)
 	{
 		this.vertexes = vertexes;
+		this.networkSize = vertexes.length;
 		this.distances = new double[vertexes.length];
 		this.edges = edges;
 	}
@@ -14,21 +20,27 @@ public class Bellman_ford{
 	public void shortestPath(int t)
 	{
 		// Find shortest distance to the target from all other nodes
-		for (int i = 0; i < this.vertexes.length; i++) this.distances[i] = Double.POSITIVE_INFINITY;
+		Arrays.fill(this.distances, Double.POSITIVE_INFINITY);
 		this.distances[t] = 0;
 		
-		int V = this.vertexes.length;
-		int count = V;
-		while (count > 0)
+		int V = this.networkSize;
+		int count = 1;
+		while (count < V)
 		{
-			count--;
+			count++;
 			double[] temp = new double[V];
-			for (int n = 0; n < V && n != t; n++)
+			Arrays.fill(temp, Double.POSITIVE_INFINITY);
+			temp[t] = 0;
+			
+			for (int n = 0; n < V; n++)
 			{
-				double[] dist_to_m = this.edges[n];
-				for (int m = 0; m < V && m != t; m++)
+				if (n != t)
 				{
-					temp[n] = Math.min(this.distances[m] + dist_to_m[m], this.distances[n]);
+					double[] dist_to_m = this.edges[n];
+					for (int m = 0; m < V; m++)
+					{
+						temp[n] = Math.min(this.distances[m] + dist_to_m[m], temp[n]);
+					}
 				}
 			}
 			this.distances = temp;
@@ -37,15 +49,19 @@ public class Bellman_ford{
 	}
 	
 	public static void main(String[] args) {
-		double[][] edges = {{0.0,1.2,3.5},{1.2,0.0,6.0},{3.5,6.0,0.0}};
-		int[] vertexes = {1,2,3};
+		double[][] edges = {
+				{0, 5, 2, -1},
+				{-2, 0, -2, -2},
+				{-1, 3, 0, Double.POSITIVE_INFINITY}, 
+				{2, 4, Double.POSITIVE_INFINITY, 0}};
+		int[] vertexes = {1,2,3,4};
 		Bellman_ford bf = new Bellman_ford(vertexes, edges);
-		bf.shortestPath(1);
+		bf.shortestPath(2);
 		for (double dist: bf.distances)
 		{
 			System.out.println(dist);
 		}
+		// Output: 1.0, -2.0, 0.0, 2.0
 	}
 	
 }
-
