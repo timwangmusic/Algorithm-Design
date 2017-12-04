@@ -6,3 +6,5 @@
 * Iterative binary tree traversals.
 * Classic dynamic programming (dp) problems and solutions.
   * Implemented Bellman-Ford shortest path algorithm with negative-weighted edges.
+
+* Classic combinatorial problem of Eight Queens.
