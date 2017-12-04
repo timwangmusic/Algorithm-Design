@@ -1,6 +1,7 @@
-# Actually you can set the board of size N and try to place N queens.
 # Problem of eight queeens.
 # Output all possible positions so that any two queens cannot attack each other.
+# Actually you can set the board of size N and try to place N queens.
+# Each output corresponds to a placement sequence of columns. The sequence itself is row sequence.
 N = 8
 def eightQueens(depth, path, avail, res):
     if depth == N:
