@@ -10,13 +10,15 @@ def TopologicalSort(edges, nodes = None):
     :type nodes: List[String]
     :rtype: List[String]
     """
-    indegrees = {node: 0 for node in nodes}
+    indegrees = {}
     graph = defaultdict(set)
     queue = deque()
     res = []
 
     for x, y in edges:
         if x in graph[y]: return []                 # Loop found, no topological sort possible
+        indegrees.setdefault(y, 0)
+        indegrees.setdefault(x, 0)
         indegrees[y] += 1
         graph[x].add(y)
 
@@ -36,4 +38,4 @@ def TopologicalSort(edges, nodes = None):
 
 nodes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 edges = [['A', 'B'], ['A', 'C'], ['B', 'D'], ['C', 'D'], ['C', 'E'], ['E', 'G'], ['D', 'F'], ['F', 'G']]
-print (TopologicalSort(edges, nodes))               # Prints ['A', 'B', 'C', 'E', 'D', 'F', 'G']
+print (TopologicalSort(edges))               # Prints ['A', 'B', 'C', 'D', 'E', 'F', 'G']
