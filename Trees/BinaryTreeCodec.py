@@ -31,7 +31,7 @@ class BinaryTreeCodec:
         rtype: BinaryNode
         """
         code = code.split(" ")
-        if len(code) == 0 or code[0] == '*': return None
+        if len(code) == 0: return None
         q = deque()
         root = BinaryNode(code[0])
         q.append(root)
@@ -47,6 +47,7 @@ class BinaryTreeCodec:
             idx += 2
         return root
 
+# Tests
 codec = BinaryTreeCodec()
 root = BinaryNode(20)
 root.left = BinaryNode(10)
