@@ -1,28 +1,43 @@
 # implement longest common subsequence algoirthm
-def LCS(X, Y):
-    """
-    type X: a sequence or string of length m
-    type Y: a sequence or string of length n
-    ret: length of the longest common subsequence of X and Y
-    """
-    m = len(X)
-    n = len(Y)
-    prev = [0] * (n + 1)
+def LCS_Memo(X, Y):
+    m, n = len(X), len(Y)
+    memo = {}
+    opt = []
+    def dp(i, j):
+        if (i, j) in memo: return memo[i, j]
+        if i < 0 or j < 0: return 0     # LCS of empty string and any string can only be empty
+        if X[i] == Y[j]:
+            memo[i, j] = dp(i-1, j-1) + 1
+        else:
+            memo[i, j] = max(dp(i, j-1), dp(i-1, j))
+        return memo[i, j]
 
-    for i in range(m):
-        current = [0] * (n + 1)
-        for j in range(n):
+    def findSolution():
+        i, j = m-1, n-1
+        while i >= 0 and j >= 0:
             if X[i] == Y[j]:
-                current[j + 1] = prev[j] + 1
+                opt.append(X[i])
+                i, j = i-1, j-1
             else:
-                current[j + 1] = max(prev[j+1], current[j])
-        prev = current
-    return current[-1]
+                if i * j > 0:
+                    if memo[i-1, j] > memo[i, j-1]:
+                        i = i - 1
+                    else:
+                        j = j - 1
+                elif i > 0:
+                    i -= 1
+                else:
+                    j -= 1
+
+    dp(m-1, n-1)
+    findSolution()
+    return opt[::-1]
+
 
 # Testing
 X = "ABCDEORK"
 Y = 'ACDEGRFO'
-res = LCS(X, Y)
-# Output: Length of the longest common subsequence of strings ABCDEORK and ACDEGRFO is 5
-print ("""Length of the longest common subsequence of strings {x} and {y} is {z}""".
-        format(x = X, y = Y, z = res))
+solution = LCS_Memo(X, Y)
+print (solution)
+print ("""The longest common subsequence of strings {x} and {y} is {z}""".
+         format(x = X, y = Y, z = solution))
