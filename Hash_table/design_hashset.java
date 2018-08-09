@@ -1,5 +1,5 @@
 class MyHashSet {
-    TreeSet t = new TreeSet();
+    TreeSet<int> t = new TreeSet<int>();
     
     public MyHashSet() {
     }
