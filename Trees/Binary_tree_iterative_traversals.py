@@ -1,7 +1,7 @@
 from BinaryTrees import TreeNode
 # All algorithms are implemented iteratively
 
-def IterativePreorder(node):
+def Iterative_preorder(node):
     stack = [node]
     traversal_res = []
     while stack:
@@ -12,7 +12,7 @@ def IterativePreorder(node):
     return traversal_res
 
 
-def IterativeInorder(node):
+def Iterative_inorder(node):
     stack = []
     traversal_res = []
     while stack or node:
@@ -26,7 +26,7 @@ def IterativeInorder(node):
     return traversal_res
 
 
-def IterativePostorder(node):
+def Iterative_postorder(node):
     stack = []
     lastVisited = None
     traversal_res = []
@@ -54,6 +54,7 @@ c = TreeNode(100)
 root.left = a
 a.right = b
 b.right = c
-print ("The postorder traversal result is: ", IterativePostorder(root))
-print ("The preorder traversal result is: ", IterativePreorder(root))
-print ("The inorder traversal result is: ", IterativeInorder(root))
+
+print ("The preorder traversal result is: ", Iterative_preorder(root))
+print ("The inorder traversal result is: ", Iterative_inorder(root))
+print ("The postorder traversal result is: ", Iterative_postorder(root))
