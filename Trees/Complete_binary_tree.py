@@ -1,51 +1,44 @@
-"""
-Given a binary tree, return True if it is a complete tree else False.
-"""
-class Node:
-    def __init__(self, key):
-        self.key = key
-        self.left = None
-        self.right = None
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-from collections import deque
-def completeTree(root):
-    if root == None: return True
-    q = deque()
-    q.append(root)
-    level = 0
-    while q:
-        count = len(q)
-        prev = q[0]
-        has_next_level = False
-        for _ in range(count):
-            cur = q.popleft()
-            if prev == None and cur != None:
+class Solution:
+    def isCompleteTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        q = collections.deque([root])
+        level = 0
+        next_layer_count = 1
+        while q:
+            count = next_layer_count
+            last = -1
+            next_layer_count = 0
+            for _ in range(count):
+                node = q.popleft()
+                if node is None and last != None:
+                    return False
+                last = node
+                if node is None: continue
+                if node.left:
+                    q.append(node.left)
+                    next_layer_count += 1
+                else:
+                    q.append(None)
+                if node.right:
+                    q.append(node.right)
+                    next_layer_count += 1
+                else:
+                    q.append(None)
+                    
+            if count < 2**level and next_layer_count > 0:
                 return False
-            prev = cur
-            if cur.left:
-                has_next_level = True
-                q.append(cur.left)
-            if cur.right:
-                has_next_level = True
-                q.append(cur.right)
-        if has_next_level:
-            if count != 2 ** level: return False
-        level += 1
-    return True
-
-# Tests
-root = Node(1)
-a = Node(2)
-b = Node(3)
-c = Node(4)
-d = Node(5)
-e = Node(6)
-root.left = a
-root.right = b
-a.left = c
-a.right = d
-b.left = e
-if completeTree(root):
-    print ("Complete tree!")
-else:
-    print ("not a Complete tree!")
+            elif next_layer_count == 0:
+                break
+            level += 1
+        return True
+    
