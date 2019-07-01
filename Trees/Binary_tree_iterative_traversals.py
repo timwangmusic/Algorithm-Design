@@ -15,14 +15,14 @@ def Iterative_preorder(node):
 def Iterative_inorder(node):
     stack = []
     traversal_res = []
-    while stack or node:
-        if node:
+    node = root
+    while node or stack:
+        while node:
             stack.append(node)
             node = node.left
-        else:
-            node = stack.pop()
-            traversal_res.append(node.key)
-            node = node.right
+        node = stack.pop()
+        traversal_res.append(node.val)
+        node = node.right
     return traversal_res
 
 
