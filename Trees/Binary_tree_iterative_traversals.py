@@ -15,7 +15,6 @@ def Iterative_preorder(node):
 def Iterative_inorder(node):
     stack = []
     traversal_res = []
-    node = root
     while node or stack:
         while node:
             stack.append(node)
