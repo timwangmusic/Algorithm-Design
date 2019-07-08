@@ -17,7 +17,7 @@ def bisect_right(nums, target, l, r):
             l = m + 1
         else:
             r = m - 1
-    return r
+    return r + 1
 
 def searchRange(nums, target, l, r, left):
     while l <= r:
