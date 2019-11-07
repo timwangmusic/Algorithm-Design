@@ -3,22 +3,24 @@ Implement Tarjan's algorithm to find strongly connected components (SCC) in a di
 
 low_link of a node v represents the smallest index of any node known to be reachable from v through v's DFS subtree
 """
+from typing import List
+
 from Graphs.nodes import Node
 
 
 # add two attributes on top of Node class
 class TarjanNode(Node):
-    def __init__(self, key=None, data=None):
+    def __init__(self, key: int = None, data: str = None):
         super().__init__(key=key, data=data)
         self.low_link = self.key
         self.on_stack = False
 
 
 class Tarjan:
-    def __init__(self, nodes):
+    def __init__(self, nodes: List[TarjanNode]):
         self.nodes = nodes
-        self.sccs = []   # each strongly connected components is stored as a list of nodes
-        self.next_idx = 1   # starting index being 1 to avoid not 0 == True
+        self.sccs = []  # each strongly connected components is stored as a list of nodes
+        self.next_idx = 1  # starting index being 1 to avoid not 0 == True
         self.stack = []
 
     def find_sccs(self):
@@ -56,11 +58,12 @@ if __name__ == "__main__":
     c = TarjanNode(None, "c")
     d = TarjanNode(None, "d")
     e = TarjanNode(None, "e")
+    f = TarjanNode(None, "f")
     a.addEdges([b, c])
     b.addEdges([c, a])
     c.addEdges([b])
     d.addEdges([c, e])
-    e.addEdges([d])
+    e.addEdges([d, f])
     tarjan = Tarjan([a, b, c, d, e])
     tarjan.find_sccs()
     # expected output:

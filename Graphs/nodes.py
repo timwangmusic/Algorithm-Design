@@ -11,7 +11,7 @@ class Node:
         : nodes: a list of nodes to be added/removed as neighbors
     """
 
-    def __init__(self, key=0, data=None):
+    def __init__(self, key: int = 0, data=None):
         self.key = key
         self.data = data
         self.neighbors = set()
