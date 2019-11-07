@@ -4,10 +4,11 @@ in which (x, y) means node with key x connects to node with key y.
 Find cycle function answers the question if the graph has cycle.
 Using Union-find data structure, we can create multiple disjoint sets.
 """
-from Union_Find import UF_node, Union_Find
+from Graphs.Union_Find import UF_node, Union_Find
+
 
 def findCycle(graph):
-    vertex_set = set()          # get vertex keys
+    vertex_set = set()  # get vertex keys
     for x, y in graph:
         vertex_set.add(x)
         vertex_set.add(y)
@@ -22,11 +23,12 @@ def findCycle(graph):
             uf.union(nodes[x], nodes[y])
     return False
 
+
 # Testing
 graph1 = [(1, 2), (3, 4), (1, 4), (2, 4), (5, 6)]
 graph2 = [(1, 2), (3, 4), (4, 5), (5, 1), (2, 6)]
 for graph in [graph1, graph2]:
     if findCycle(graph):
-        print ('There is cycle in graph %s.' % str(graph))
+        print('There is cycle in graph %s.' % str(graph))
     else:
-        print ('No cycle detected in graph %s.' % str(graph))
+        print('No cycle detected in graph %s.' % str(graph))
