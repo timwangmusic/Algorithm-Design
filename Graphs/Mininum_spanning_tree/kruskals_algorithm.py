@@ -1,4 +1,4 @@
-from Graphs.Mininum_spanning_tree.mst_node import MSTNode
+from Graphs.Mininum_spanning_tree.mst_nodes import MSTNode
 from collections import defaultdict
 
 

@@ -2,13 +2,14 @@ from Graphs.nodes import Node
 import random
 
 
-class generateNetwork:
+class NodeGenerator:
     def __init__(self):
         self.lastKey = -1
 
-    def generateRandomNodes(self, numNodes=8, dim=2, val_start=0, val_end=100):
+    def generate_nodes(self, numNodes=10, dim=2, val_start=0, val_end=100):
         """
         Return a list of nodes with random values, using random.uniform function.
+        Each call to generate_nodes generates a list of nodes with unique keys.
         """
         random.seed()
         cur_key = self.lastKey + 1
@@ -20,30 +21,30 @@ class generateNetwork:
         self.lastKey += numNodes
         return nodes
 
-    def constructNetwork(self, nodes):
+    def construct_graph(self, nodes):
         pass
 
 
-class generateTree(generateNetwork):
+class TreeGenerator(NodeGenerator):
     """
-    Derived from generate network class.
-    Construct network function constructs a tree with random connection, given a list of nodes.
+    Construct network function constructs a tree with random connections.
+    The number of children for any node in the tree is random as well.
     The collection of trees created is saved in the forest variable.
     """
 
     def __init__(self):
-        generateNetwork.__init__(self)
+        NodeGenerator.__init__(self)
         self.forest = []
 
-    def constructNetwork(self, nodes):
+    def construct_graph(self, nodes):
         random.seed()
         random.shuffle(nodes)  # randomization
         root = None
         tree = []
-        parent = None
         while nodes:
             n = nodes.pop()
-            if tree:
+            if len(tree) > 0:
+                # grow new tree from randomly selected node already added to the tree
                 parent = random.choice(tree)
                 parent.addEdges([n])
             else:
@@ -51,12 +52,13 @@ class generateTree(generateNetwork):
             tree.append(n)
         self.forest.append(root)
 
-    def _print(self, node):
+    # pre-order printing with depth-first search
+    def print_tree(self, node):
         if node is None:
             return
         print(node.key)
         for n in node.neighbors:
-            self._print(n)
+            self.print_tree(n)
 
 
 class Test:
@@ -64,11 +66,12 @@ class Test:
         pass
 
     @staticmethod
-    def generatePrint(numTrees=3):
-        gt = generateTree()
-        for i in range(numTrees):
-            gt.constructNetwork(gt.generateRandomNodes())
-            gt._print(gt.forest[-1])
+    def test_tree_construction(numTrees=2):
+        tree_generator = TreeGenerator()
+        for idx in range(1, numTrees + 1):
+            print(f"printing tree #{idx}")
+            tree_generator.construct_graph(tree_generator.generate_nodes(numNodes=5))
+            tree_generator.print_tree(tree_generator.forest[-1])
 
 
-Test.generatePrint()
+Test.test_tree_construction()

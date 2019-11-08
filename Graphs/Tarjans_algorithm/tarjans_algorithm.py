@@ -5,7 +5,7 @@ low_link of a node v represents the smallest index of any node known to be reach
 """
 from typing import List
 
-from Graphs.Tarjans_algorithm.tarjan_node import TarjanNode
+from Graphs.Tarjans_algorithm.tarjan_nodes import TarjanNode
 
 
 class Tarjan:
