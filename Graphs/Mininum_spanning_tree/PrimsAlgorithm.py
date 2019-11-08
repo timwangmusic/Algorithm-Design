@@ -1,12 +1,14 @@
-from Graphs.nodes import MSTNode
+from Graphs.Mininum_spanning_tree.mst_node import MSTNode
 from heapq import heappush, heappop
+
 
 class Prims:
     """
     This class implement the Prim's algorithm to find the minimum spanning tree
     in an undirected weighted graph.
     """
-    def __init__(self, network = [MSTNode(data = (0, 0))]):
+
+    def __init__(self, network=[MSTNode(data=(0, 0))]):
         """
         params:
             network: a list of Minimum-spanning tree nodes that are connected per graph topology
@@ -48,28 +50,30 @@ class Prims:
 
     def printMST(self):
         for edge in self.mst:
-            print ("(%d, %d)" % (edge[0].key, edge[1].key))
+            print("(%d, %d)" % (edge[0].key, edge[1].key))
 
-class Test():
+
+class Test:
     def __init__(self):
-        s = MSTNode(key = 0, data = (0,10))
-        a = MSTNode(key = 1, data = (-3, 0))
-        b = MSTNode(key = 2, data = (-5,10))
-        c = MSTNode(key = 3, data = (5,0))
-        d = MSTNode(key = 4, data = (20,-5))
+        s = MSTNode(key=0, data=(0, 10))
+        a = MSTNode(key=1, data=(-3, 0))
+        b = MSTNode(key=2, data=(-5, 10))
+        c = MSTNode(key=3, data=(5, 0))
+        d = MSTNode(key=4, data=(20, -5))
         s.addEdges([a, b, c, d])
         a.addEdges([s, b, d])
         b.addEdges([s, a])
         c.addEdges([s, d, a])
         d.addEdges([s, c])
         self.network = [s, a, b, c, d]
+        self.prims = Prims(self.network)
 
     def runAlgorithm(self):
-        self.prims = Prims(self.network)
         self.prims.constructMST()
-        print ("The edges of minimum spanning tree are: ")
+        print("The edges of minimum spanning tree are: ")
         self.prims.printMST()
-        print ("The total cost of building minimum spanning tree is %.2f" % self.prims.MSTCost())
+        print("The total cost of building minimum spanning tree is %.2f" % self.prims.MSTCost())
+
 
 if __name__ == '__main__':
     test = Test()
