@@ -1,6 +1,3 @@
-from math import sqrt
-
-
 class Node:
     """
     Basic node class for directed graphs.
@@ -24,9 +21,3 @@ class Node:
         for node in nodes:
             # using discard does not to raise key error
             self.neighbors.discard(node)
-
-    def isNeighbor(self, node):
-        return node in self.neighbors
-
-
-
