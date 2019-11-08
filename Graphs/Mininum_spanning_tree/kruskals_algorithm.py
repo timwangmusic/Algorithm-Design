@@ -1,18 +1,21 @@
-from Graphs.nodes import MSTNode
+from Graphs.Mininum_spanning_tree.mst_nodes import MSTNode
 from collections import defaultdict
+
 
 class Kruskals:
     """
     This class implement the Kruskal's algorithm to find the minimum spanning tree
     in an undirected weighted graph.
     """
+
     def __init__(self, network):
+        self.cost = 0
         self.nodes = network
         self.networkSize = len(self.nodes)
         self.edges = defaultdict(list)
         self.clusters = [-1] * self.networkSize
         for i, node in enumerate(network):
-            for j in range(i+1, self.networkSize):
+            for j in range(i + 1, self.networkSize):
                 if node.isNeighbor(network[j]):
                     dist = node.getDist(network[j])
                     self.edges[dist].append((node, network[j]))
@@ -46,44 +49,45 @@ class Kruskals:
         cluster_y = self.findCluster(y)
         if cluster_x != cluster_y:
             self.clusters[cluster_x] = cluster_y
-            self.mst.append((x,y))
+            self.mst.append((x, y))
 
     def constructMST(self):
         while self.hasNext():
-            x,y = self.next()
+            x, y = self.next()
             # Union-Find
-            self.union(x,y)
+            self.union(x, y)
 
     def MSTCost(self):
-        self.cost = 0
-        for x,y in self.mst:
+        for x, y in self.mst:
             self.cost += x.getDist(y)
         return self.cost
 
     def printMST(self):
         for edge in self.mst:
-            print ("(%d, %d)" % (edge[0].key, edge[1].key))
+            print("(%d, %d)" % (edge[0].key, edge[1].key))
+
 
 class Test:
     def __init__(self):
-        s = MSTNode(key = 0, data = (0,0))
-        a = MSTNode(key = 1, data = (-3, 0))
-        b = MSTNode(key = 2, data = (-5,0))
-        c = MSTNode(key = 3, data = (5,0))
-        d = MSTNode(key = 4, data = (20,0))
+        s = MSTNode(key=0, data=(0, 0))
+        a = MSTNode(key=1, data=(-3, 0))
+        b = MSTNode(key=2, data=(-5, 0))
+        c = MSTNode(key=3, data=(5, 0))
+        d = MSTNode(key=4, data=(20, 0))
         s.addEdges([a, b, c, d])
         a.addEdges([s, b, d])
         b.addEdges([s, a])
         c.addEdges([s, d, a])
         d.addEdges([s, c])
         self.network = [s, a, b, c, d]
+        self.kruskals = Kruskals(self.network)
 
     def runAlgorithm(self):
-        self.kruskals = Kruskals(self.network)
         self.kruskals.constructMST()
-        print ("The edges of minimum spanning tree are: ")
+        print("The edges of minimum spanning tree are: ")
         self.kruskals.printMST()
-        print ("The total cost of building minimum spanning tree is %.2f" % self.kruskals.MSTCost())
+        print("The total cost of building minimum spanning tree is %.2f" % self.kruskals.MSTCost())
+
 
 if __name__ == '__main__':
     test = Test()

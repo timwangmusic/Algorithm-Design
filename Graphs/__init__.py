@@ -1,3 +1,3 @@
-from Graphs.KruskalsAlgorithm import Kruskals
-from Graphs.PrimsAlgorithm import Prims
+from Graphs.Mininum_spanning_tree.kruskals_algorithm import Kruskals
+from Graphs.Mininum_spanning_tree.prims_algorithm import Prims
 from Graphs.Union_Find import Union_Find
