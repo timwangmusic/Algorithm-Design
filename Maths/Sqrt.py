@@ -1,5 +1,5 @@
 # Use binary search to find square root (floor to integer) of a non-negative integer.
-def mySqrt(self, x):
+def mySqrt(x):
     """
     :type x: int
     :rtype: int
@@ -16,4 +16,3 @@ def mySqrt(self, x):
                 start = mid + 1
         return end
     return binSearch(1, x, x)
-        
